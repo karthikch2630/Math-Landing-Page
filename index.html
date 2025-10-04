@@ -1,13 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>High-School Math Tutoring Landing Page</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Meta Tags -->
+  <title>CBSE Class 10 Math Tutoring - Expert Help for Your Child</title>
+  <meta name="description" content="Top-rated CBSE Class 10 math tutoring for parents. Help your child excel in math with expert tutors, personalized lessons, and proven results." />
+  <meta name="keywords" content="best online tuition for class 9 cbse, online tuition for class 10 cbse, best online coaching for class 10 cbse, cbse online tuition, online tuition for class 11 cbse, online maths tuition for class 10 cbse, best online tuition for class 8 cbse, online tuition for cbse class 10, best online tuition for class 10 cbse, best online tuition for class 11 cbse, online cbse maths tuition, online maths tuition for class 9 cbse, online tuition for class 12 cbse, cbse class 12 maths online tuition, best online tuition for class 12 cbse, online tuition for class 8 cbse, online tuition for cbse class 8, online coaching for class 10 cbse, online tuition for cbse class 9, online tuition for class 10 cbse near me, best coaching for cbse class 10 near me, cbse 10th online coaching, best online coaching for cbse class 10, 9th class cbse online coaching, online maths tuition for class 12 cbse, 10th cbse tuition, 10th class cbse online coaching, best coaching for 10th cbse near me, best coaching for class 10 cbse, best online tuition for cbse, best tuition for class 9 cbse, cbse 9th tuition near me, cbse class 10 coaching, cbse class 10 online coaching, cbse class 9 online coaching, cbse maths tuition, cbse maths tutor, cbse online tutor, cbse online tutoring, class 10 cbse coaching, class 10 maths tuition, home tuition for 10th class cbse, online cbse class 8 maths tuitions, online coaching for cbse class 10, online tutor for class 9 cbse" />
+  <meta name="author" content="Ankuram Tuition" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph for Social Media -->
+  <meta property="og:title" content="CBSE Class 10 Math Tutoring - Excel with Expert Help" />
+  <meta property="og:description" content="Help your child succeed in CBSE Class 10 math with personalized tutoring. Expert tutors, flexible schedules, and proven results." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cbseclass10.ankuramtuition.com/" />
+  <meta property="og:image" content="https://cbseclass10.ankuramtuition.com/og-image.jpg" />
+  <meta property="og:site_name" content="Ankuram Tuition" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CBSE Class 10 Math Tutoring - Expert Help" />
+  <meta name="twitter:description" content="Personalized CBSE Class 10 math tutoring to help your child excel. Expert tutors and flexible schedules." />
+  <meta name="twitter:image" content="https://cbseclass10.ankuramtuition.com/og-image.jpg" />
+
+  <!-- Favicon and Manifest -->
+  <link rel="icon" type="image/svg+xml" href="/logo.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Ankuram Tuition",
+      "url": "https://cbseclass10.ankuramtuition.com/",
+      "description": "Expert CBSE Class 10 math tutoring to help students excel with personalized lessons and experienced tutors.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Support",
+        "email": "support@ankuramtuition.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "CBSE Class 10 Math Tutoring",
+          "description": "Personalized math tutoring for CBSE Class 10 students, focusing on algebra, geometry, trigonometry, and board exam preparation."
+        }
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why choose our CBSE Class 10 math tutoring?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our tutoring offers personalized lessons, experienced CBSE-aligned tutors, and a focus on board exam success, helping your child build confidence and excel in math."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What topics are covered in CBSE Class 10 math tutoring?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We cover all CBSE Class 10 math topics, including algebra, geometry, trigonometry, statistics, and probability, with practice for board exams."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React Entry Point -->
+  <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Service Worker for PWA -->
+  <script type="text/javascript">
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => console.log('Service Worker registered:', registration))
+          .catch(error => console.log('Service Worker registration failed:', error));
+      });
+    }
+  </script>
+</body>
 </html>

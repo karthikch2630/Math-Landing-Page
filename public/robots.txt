@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cbseclass10.ankuramtuition.com/sitemap.xml

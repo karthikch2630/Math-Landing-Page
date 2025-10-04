@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet";  
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
-
 import AssessmentSection from './components/TestimonialSection';
-
 import CTASection from './components/CTASection';
 import Footer from './components/Footer';
 import InductionAssessment from './components/InductionAssessment';
@@ -13,6 +12,20 @@ import BatchTimings from "./components/Bathsection";
 
 function App() {
   return (
+    <>
+    <Helmet>
+        <title>CBSE Class 10 Tuition | Math & Science Coaching</title>
+        <meta
+          name="description"
+          content="Help your child excel in CBSE Class 10 with personalized Math and Science tuition. Small batches, focused learning, expert teachers."
+        />
+        <meta
+          name="keywords"
+          content="CBSE Class 10 tuition, Math Science coaching for Class 10, personalized tuition for CBSE students"
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/" />
+      </Helmet>
     <Router>
       <div className="min-h-screen bg-white text-gray-900 font-sans">
         <Navigation />
@@ -39,6 +52,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </>
   );
 }
 

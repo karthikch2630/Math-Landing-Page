@@ -64,17 +64,18 @@ const Navigation: React.FC = () => {
               >
                 Testimonials
               </button>
+              
+              <a href="https:wa.me/917396669430" target="_blank" rel="noopener noreferrer">
+                <button className="bg-black text-yellow-400 px-6 py-2 rounded-lg hover:bg-black/45 transition-colors font-semibold">
+                  Book Induction Assessment
+                </button>
+              </a>
               <button
                 onClick={() => handleNavigation('/', 'faq')}
-                className="text-gray-700 hover:text-black transition-colors"
+                className="bg-yellow-300 text-black px-6 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-semibold"
               >
                 Frequently Asked Questions
               </button>
-              <Link to="/assessment">
-                <button className="bg-yellow-300 text-black px-6 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-semibold">
-                  Book Induction Assessment
-                </button>
-              </Link>
             </div>
 
             {/* Mobile Hamburger */}
