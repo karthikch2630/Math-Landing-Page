@@ -133,26 +133,39 @@ function HeroSection() {
 
         {/* Contact Buttons */}
         <div className="fixed right-4 bottom-4 flex flex-col gap-3 z-50">
-          {/* WhatsApp Button */}
-          <a
-            href="https://wa.me/7396669430"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
-            aria-label="Contact us on WhatsApp for CBSE Class 10 math tutoring"
-          >
-            <TypedFaWhatsapp className="w-5 h-6 sm:w-6 sm:h-6" />
-          </a>
+  {/* WhatsApp Button */}
+  <a
+    href="https://wa.me/7396669430"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
+    aria-label="Contact us on WhatsApp for CBSE Class 10 math tutoring"
+  >
+    <TypedFaWhatsapp className="w-5 h-6 sm:w-6 sm:h-6" />
+  </a>
 
-          {/* Phone Button */}
-          <a
-            href="tel:+917396669430"
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
-            aria-label="Call us for CBSE Class 10 math tutoring inquiries"
-          >
-            <TypedPhone className="w-5 h-6 sm:w-6 sm:h-6" />
-          </a>
-        </div>
+  {/* Phone Button */}
+  <a
+    href="tel:+917396669430"
+    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
+    aria-label="Call us for CBSE Class 10 math tutoring inquiries"
+  >
+    <TypedPhone className="w-5 h-6 sm:w-6 sm:h-6" />
+  </a>
+
+  {/* Check Roadmap Button */}
+  <div className="fixed right-4 top-1/3 z-50">
+  <Link
+    to="/assessment"
+    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-5 rounded-r-lg shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer block -rotate-90 transform origin-right"
+    aria-label="Check our roadmap"
+  >
+    Check Our Roadmap
+  </Link>
+</div>
+
+</div>
+
       </section>
     </>
   );

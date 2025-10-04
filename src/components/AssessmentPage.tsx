@@ -52,7 +52,7 @@ export default function Assessment() {
 
 
       {/* Hero Section - Split Design */}
-      <section className="relative overflow-hidden" aria-labelledby="hero-heading">
+      <section id="assessment-page" className="relative overflow-hidden" aria-labelledby="hero-heading">
         <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-200 to-yellow-100 opacity-20" aria-hidden="true"></div>
         <div className="max-w-7xl mx-auto px-6 py-24 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
