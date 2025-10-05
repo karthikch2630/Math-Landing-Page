@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Helmet } from "react-helmet";  
+import { Helmet, HelmetProvider } from "react-helmet-async";  
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
 import AssessmentSection from './components/TestimonialSection';
@@ -12,8 +12,8 @@ import BatchTimings from "./components/Bathsection";
 
 function App() {
   return (
-    <>
-    <Helmet>
+    <HelmetProvider>
+      <Helmet>
         <title>CBSE Class 10 Tuition | Math & Science Coaching</title>
         <meta
           name="description"
@@ -26,7 +26,7 @@ function App() {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/" />
       </Helmet>
-    <Router>
+      <Router>
       <div className="min-h-screen bg-white text-gray-900 font-sans">
         <Navigation />
 
@@ -51,8 +51,8 @@ function App() {
           <Route path="/assessment" element={<Assessment />} />
         </Routes>
       </div>
-    </Router>
-    </>
+      </Router>
+    </HelmetProvider>
   );
 }
 

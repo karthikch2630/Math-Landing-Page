@@ -1,5 +1,5 @@
 import { GraduationCap, Users, Target, ClipboardCheck, TrendingUp, Brain, CheckCircle, Award, Star } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 export default function Assessment() {
 
   const jsonLd = {

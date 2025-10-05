@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import AnimatedSection from './AnimatedSection';
 
 // Type definitions for icon components
