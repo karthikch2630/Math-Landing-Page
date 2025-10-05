@@ -23,7 +23,7 @@ interface Schedule {
 const BatchTimings: React.FC = () => {
   const [selectedBatch, setSelectedBatch] = useState<string | null>(null);
 
-  // Memoize time slots to prevent recreation on each render
+  // Memoize time slots
   const timeSlots: TimeSlot[] = useMemo(() => [
     {
       time: '5:00 PM - 6:00 PM',
@@ -60,7 +60,7 @@ const BatchTimings: React.FC = () => {
     },
   ], []);
 
-  // Memoize schedule to prevent recreation
+  // Memoize schedule
   const schedule: Schedule[] = useMemo(() => [
     { day: 'MONDAY', batches: ['Batch 1 (CBSE)', 'Batch 2 (CBSE)', 'Batch 3 (CBSE)'] },
     { day: 'TUESDAY', batches: ['Batch 1 (CBSE)', 'Batch 2 (CBSE)', 'Batch 3 (CBSE)'] },
@@ -73,37 +73,25 @@ const BatchTimings: React.FC = () => {
   // Memoize animation variants
   const headerVariants = useMemo(() => ({
     hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] as const },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   }), []);
 
   const cardVariants = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
   }), []);
 
   const selectedVariants = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.3 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
   }), []);
 
-  // Optimize click handler with useCallback
+  // Optimize click handler
   const handleBatchClick = useCallback((batchKey: string) => {
-    setSelectedBatch(prev => prev === batchKey ? null : batchKey);
+    setSelectedBatch(prev => (prev === batchKey ? null : batchKey));
   }, []);
 
-  // Get selected batch details for announcement
+  // Get selected batch details
   const getSelectedBatchInfo = useCallback(() => {
     if (!selectedBatch) return null;
     const [day, slotIdx] = selectedBatch.split('-');
@@ -113,7 +101,7 @@ const BatchTimings: React.FC = () => {
 
   return (
     <>
-      {/* Dynamic Meta Tags for SEO */}
+      {/* SEO Meta Tags */}
       <Helmet>
         <title>CBSE Class 10 Math Batch Timings | Hyderabad Tutoring Schedule</title>
         <meta
@@ -133,7 +121,7 @@ const BatchTimings: React.FC = () => {
         <meta property="og:url" content="https://cbseclass10.ankuramtuition.com/batch-timings" />
       </Helmet>
 
-      {/* Enhanced Structured Data for Tutoring Schedule */}
+      {/* Structured Data */}
       <Helmet>
         <script type="application/ld+json">{`
           {
@@ -165,7 +153,7 @@ const BatchTimings: React.FC = () => {
                   "description": "CBSE Class 10 math tutoring session from ${slot.time} for ${slot.level.toLowerCase()} level students. Limited to 5 students per batch.",
                   "courseSchedule": {
                     "@type": "Schedule",
-                    "repeatFrequency": "P1W",
+                    "repeatFrequency": "Weekly",
                     "byDay": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
                   },
                   "maximumAttendeeCapacity": 5,
@@ -268,14 +256,14 @@ const BatchTimings: React.FC = () => {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => handleBatchClick(`${day.day}-${slotIdx}`)}
-                        className={`flex-1 bg-white border-2 rounded-xl py-3 px-4 text-sm sm:text-base font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2
+                        className={`flex-1 bg-white border-2 rounded-xl py-3 px-4 text-sm sm:text-base font-medium
                           ${selectedBatch === `${day.day}-${slotIdx}`
                             ? `${slot.borderColor} ${slot.activeBg} ${slot.textColor} shadow-lg`
                             : 'border-gray-300 text-gray-700 hover:border-gray-400 hover:shadow-md'
                           }`}
                         type="button"
                         aria-pressed={selectedBatch === `${day.day}-${slotIdx}`}
-                        aria-label={`${selectedBatch === `${day.day}-${slotIdx}` ? 'Deselect' : 'Select'} ${day.batches[slotIdx]} on ${day.day} at ${slot.time} - ${slot.level} level`}
+                        aria-label={`${selectedBatch === `${day.day}-${slotIdx}` ? 'Deselect' : 'Select'} ${day.batches[slotIdx]} on ${day.day} at ${slot.time} for ${slot.level} level`}
                       >
                         {day.batches[slotIdx]}
                       </motion.button>
@@ -287,7 +275,7 @@ const BatchTimings: React.FC = () => {
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden lg:grid grid-cols-[140px_1fr_1fr_1fr] gap-4 xl:gap-6">
+          <div className="hidden lg:grid grid-cols-[140px_1fr_1fr_1fr] gap-4 xl:gap-6" role="grid" aria-label="Batch timings schedule">
             {/* Column headers */}
             <div></div>
             {timeSlots.map((slot, idx) => (
@@ -296,7 +284,7 @@ const BatchTimings: React.FC = () => {
                 initial="hidden"
                 animate="visible"
                 variants={cardVariants}
-                className={`${slot.bgColor} ${slot.borderColor} ${slot.hoverBg} border-2 rounded-2xl p-6 text-center shadow-md transition-all duration-300`}
+                className={`${slot.bgColor} ${slot.borderColor} ${slot.hoverBg} border-2 rounded-2xl p-6 text-center shadow-md`}
                 role="columnheader"
                 aria-label={slot.ariaLabel}
               >
@@ -317,7 +305,7 @@ const BatchTimings: React.FC = () => {
 
             {/* Schedule grid */}
             {schedule.map((day, dayIdx) => (
-              <div key={dayIdx} className="contents">
+              <div key={dayIdx} className="contents" role="row">
                 <div 
                   className="flex items-center justify-end pr-4"
                   role="rowheader"
@@ -333,16 +321,16 @@ const BatchTimings: React.FC = () => {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => handleBatchClick(`${day.day}-${batchIdx}`)}
-                      className={`w-full bg-white border-2 rounded-xl py-4 px-5 font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2
+                      className={`w-full bg-white border-2 rounded-xl py-4 px-5 text-sm xl:text-base font-medium
                         ${selectedBatch === `${day.day}-${batchIdx}`
-                          ? `${timeSlots[batchIdx].borderColor} ${timeSlots[batchIdx].activeBg} ${timeSlots[batchIdx].textColor} shadow-xl font-bold`
+                          ? `${timeSlots[batchIdx].borderColor} ${timeSlots[batchIdx].activeBg} ${timeSlots[batchIdx].textColor} shadow-xl`
                           : 'border-gray-300 text-gray-700 hover:border-gray-400 hover:shadow-lg'
                         }`}
                       type="button"
                       aria-pressed={selectedBatch === `${day.day}-${batchIdx}`}
-                      aria-label={`${selectedBatch === `${day.day}-${batchIdx}` ? 'Deselect' : 'Select'} ${batch} on ${day.day} at ${timeSlots[batchIdx].time} - ${timeSlots[batchIdx].level} level`}
+                      aria-label={`${selectedBatch === `${day.day}-${batchIdx}` ? 'Deselect' : 'Select'} ${batch} on ${day.day} at ${timeSlots[batchIdx].time} for ${timeSlots[batchIdx].level} level`}
                     >
-                      <span className="text-sm xl:text-base">{batch}</span>
+                      {batch}
                     </motion.button>
                   </div>
                 ))}
@@ -377,8 +365,8 @@ const BatchTimings: React.FC = () => {
           >
             <a
               href="tel:+917396669430"
-              className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
-              aria-label="Call to reserve your batch at +91 7396669430"
+              className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
+              aria-label="Call to reserve your CBSE Class 10 math tutoring batch at +91 7396669430"
             >
               <span>Reserve Your Batch</span>
               <svg 

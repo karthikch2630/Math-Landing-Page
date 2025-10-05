@@ -1,8 +1,23 @@
-
+import React from 'react';
 import { motion } from "framer-motion";
 import { Helmet } from 'react-helmet-async';
 
-const testimonials = [
+// Type definitions for testimonials
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  text: string;
+  video: string;
+}
+
+interface ScrollingTestimonial {
+  id: number;
+  text: string;
+  name: string;
+}
+
+const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Bhavish Reddy",
@@ -26,7 +41,7 @@ const testimonials = [
   },
 ];
 
-const scrollingTestimonials = [
+const scrollingTestimonials: ScrollingTestimonial[] = [
   {
     id: 1,
     text: "Very good tuition centre for grade 12 mathematics. My daughter joined in April and she is quite confident with her portion especially calculus part.",
@@ -57,8 +72,9 @@ const scrollingTestimonials = [
 const TestimonialSection = () => {
   return (
     <>
-      {/* Dynamic Meta Tags for SEO */}
+      {/* SEO Meta Tags */}
       <Helmet>
+        <title>CBSE Class 10 Math Tutoring Testimonials | Hyderabad</title>
         <meta
           name="description"
           content="Read testimonials from CBSE Class 10 students and parents in Hyderabad. Discover how our expert math tutoring boosts confidence and grades."
@@ -67,6 +83,12 @@ const TestimonialSection = () => {
           name="keywords"
           content="CBSE Class 10 math tutoring reviews, math tutoring Hyderabad, CBSE Grade 10 testimonials, Ankuram Tuition Centre reviews, parents CBSE Class 10"
         />
+        <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/testimonials" />
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="CBSE Class 10 Math Tutoring Testimonials | Hyderabad" />
+        <meta property="og:description" content="Hear from students and parents about the impact of our CBSE Class 10 math tutoring in Hyderabad." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://cbseclass10.ankuramtuition.com/testimonials" />
       </Helmet>
 
       {/* Structured Data for Reviews */}
@@ -96,7 +118,8 @@ const TestimonialSection = () => {
                   "reviewRating": {
                     "@type": "Rating",
                     "ratingValue": "5"
-                  }
+                  },
+                  "datePublished": "2025-10-05"
                 }`,
               ).join(',')}
               ${scrollingTestimonials.map(
@@ -112,7 +135,8 @@ const TestimonialSection = () => {
                   "reviewRating": {
                     "@type": "Rating",
                     "ratingValue": "5"
-                  }
+                  },
+                  "datePublished": "2025-10-05"
                 }`,
               ).join('')}
             ]
@@ -127,6 +151,7 @@ const TestimonialSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
             <h1 id="testimonials-heading" className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
@@ -145,7 +170,7 @@ const TestimonialSection = () => {
             transition={{ duration: 0.6 }}
             className="mb-16"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white p-6 md:p-8">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white p-6 md:p-8" tabIndex={0}>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="order-2 md:order-1 space-y-4">
                   <div className="inline-block px-4 py-2 bg-yellow-300 rounded-full">
@@ -155,7 +180,7 @@ const TestimonialSection = () => {
                   <p className="text-base text-gray-500 font-medium">{testimonials[0].role}</p>
                   <p className="text-xl text-gray-700 leading-relaxed">{testimonials[0].text}</p>
                 </div>
-                <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition duration-300">
+                <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-xl">
                   <video
                     src={testimonials[0].video}
                     controls
@@ -163,7 +188,7 @@ const TestimonialSection = () => {
                     muted
                     preload="metadata"
                     className="w-full h-64 md:h-96 object-cover"
-                    aria-label={`Testimonial video by ${testimonials[0].name} about CBSE Class 10 math tutoring`}
+                    aria-label={`Testimonial video by ${testimonials[0].name} about their experience with CBSE Class 10 math tutoring at Ankuram Tuition Centre`}
                   />
                 </div>
               </div>
@@ -179,7 +204,8 @@ const TestimonialSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.2 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl"
+                tabIndex={0}
               >
                 <div className="rounded-xl overflow-hidden">
                   <video
@@ -189,7 +215,7 @@ const TestimonialSection = () => {
                     muted
                     preload="metadata"
                     className="w-full h-64 object-cover"
-                    aria-label={`Testimonial video by ${t.name} about CBSE Class 10 math tutoring`}
+                    aria-label={`Testimonial video by ${t.name} about their experience with CBSE Class 10 math tutoring at Ankuram Tuition Centre`}
                   />
                 </div>
                 <div className="p-6 space-y-3">
@@ -202,11 +228,12 @@ const TestimonialSection = () => {
           </div>
 
           {/* Scrolling Testimonials */}
-          <div className="relative overflow-hidden mt-20">
+          <div className="relative overflow-hidden mt-20" role="list" aria-label="Parent testimonials for CBSE Class 10 math tutoring">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
@@ -227,14 +254,15 @@ const TestimonialSection = () => {
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{
                   repeat: Infinity,
-                  duration: 40,
+                  duration: 30,
                   ease: "linear",
                 }}
               >
                 {[...scrollingTestimonials, ...scrollingTestimonials].map((st, i) => (
                   <div
-                    key={st.id + "-" + i}
-                    className="min-w-[340px] bg-white border border-gray-200 rounded-2xl shadow-md p-8 flex flex-col justify-between hover:shadow-xl hover:border-yellow-300 transition-all duration-300"
+                    key={`${st.id}-${i}`}
+                    className="min-w-[340px] bg-white border border-gray-200 rounded-2xl shadow-md p-8 flex flex-col justify-between hover:shadow-xl hover:border-yellow-300"
+                    role="listitem"
                   >
                     <div className="mb-4">
                       <svg className="w-10 h-10 text-yellow-300 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -255,8 +283,19 @@ const TestimonialSection = () => {
           </div>
         </div>
       </section>
+
+      {/* Accessibility CSS */}
+      <style>{`
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
     </>
   );
 };
 
-export default TestimonialSection;
+export default React.memo(TestimonialSection);

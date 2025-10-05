@@ -5,8 +5,6 @@ import { Helmet } from "react-helmet-async";
 // Type definitions for images
 interface Image {
   src: string;
-  srcSet: string;
-  sizes: string;
   alt: string;
   width: number;
   height: number;
@@ -16,32 +14,24 @@ const InductionAssessment: React.FC = () => {
   const images: Image[] = [
     {
       src: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about_us_p69cll.png",
-      srcSet: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_400/v1759293150/about_us_p69cll.png 400w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about_us_p69cll.png 600w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_800/v1759293150/about_us_p69cll.png 800w",
-      sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px",
       alt: "CBSE Class 10 student confidently solving advanced mathematics problems with study materials",
       width: 600,
       height: 400,
     },
     {
       src: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us1_htojr0.png",
-      srcSet: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_400/v1759293150/about-us1_htojr0.png 400w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us1_htojr0.png 600w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_800/v1759293150/about-us1_htojr0.png 800w",
-      sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px",
       alt: "Experienced tutor providing personalized guidance to CBSE Class 10 student during math tutoring session",
       width: 600,
       height: 400,
     },
     {
       src: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us2_lacgek.png",
-      srcSet: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_400/v1759293150/about-us2_lacgek.png 400w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us2_lacgek.png 600w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_800/v1759293150/about-us2_lacgek.png 800w",
-      sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px",
       alt: "Student taking CBSE Class 10 math diagnostic assessment test to identify learning needs",
       width: 600,
       height: 400,
     },
     {
       src: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us3_gc3uqq.png",
-      srcSet: "https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_400/v1759293150/about-us3_gc3uqq.png 400w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_600/v1759293150/about-us3_gc3uqq.png 600w, https://res.cloudinary.com/diqux3y0a/image/upload/q_auto,f_auto,w_800/v1759293150/about-us3_gc3uqq.png 800w",
-      sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px",
       alt: "Student effectively preparing for CBSE Class 10 board math examination with structured study plan",
       width: 600,
       height: 400,
@@ -51,12 +41,12 @@ const InductionAssessment: React.FC = () => {
   // Framer Motion variants
   const containerVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as const } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const } },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
   };
 
   return (
@@ -153,19 +143,18 @@ const InductionAssessment: React.FC = () => {
                 variants={cardVariants}
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-                className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 focus-within:ring-4 focus-within:ring-yellow-400 focus-within:ring-offset-2"
+                className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-md hover:shadow-xl focus-within:ring-4 focus-within:ring-yellow-400 focus-within:ring-offset-2"
                 tabIndex={0}
-                aria-label={`Step ${index + 1} of assessment process`}
+                aria-label={`Step ${index + 1} of assessment process: ${img.alt}`}
               >
                 <div className="p-4 md:p-6">
                   <img
                     src={img.src}
-                    srcSet={img.srcSet}
-                    sizes={img.sizes}
                     alt={img.alt}
                     className="w-full h-64 md:h-72 lg:h-80 object-contain"
                     loading="lazy"
                     decoding="async"
+                    fetchPriority="low"
                     width={img.width}
                     height={img.height}
                   />
@@ -187,7 +176,7 @@ const InductionAssessment: React.FC = () => {
               className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
               aria-label="Call to book your free CBSE Class 10 math assessment"
             >
-              <span>Book Free Assessment</span>
+              <span>Book Assessment</span>
               <svg
                 className="w-5 h-5"
                 fill="none"

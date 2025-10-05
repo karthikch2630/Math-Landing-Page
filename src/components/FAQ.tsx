@@ -11,7 +11,7 @@ interface FAQ {
 const FAQSection: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  // Memoize FAQs to prevent recreation
+  // Memoize FAQs
   const faqs: FAQ[] = useMemo(() => [
     {
       question: "What makes your CBSE Class 10 math tutoring different?",
@@ -56,19 +56,17 @@ const FAQSection: React.FC = () => {
   // Memoize animation variants
   const headingVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as const,
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   }), []);
 
-  // Optimize toggle function with useCallback
+  const cardVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  }), []);
+
+  // Optimize toggle function
   const toggleExpand = useCallback((index: number) => {
-    setExpandedIndex(prev => prev === index ? null : index);
+    setExpandedIndex(prev => (prev === index ? null : index));
   }, []);
 
   // Escape JSON strings for structured data
@@ -83,7 +81,7 @@ const FAQSection: React.FC = () => {
 
   return (
     <>
-      {/* Dynamic Meta Tags for SEO */}
+      {/* SEO Meta Tags */}
       <Helmet>
         <title>CBSE Class 10 Math Tutoring FAQs | Ankuram Tuition Hyderabad</title>
         <meta
@@ -95,7 +93,6 @@ const FAQSection: React.FC = () => {
           content="CBSE Class 10 math tutoring FAQs, math tutoring Hyderabad, CBSE Grade 10 math classes, Ankuram Tuition Centre, parents CBSE Class 10"
         />
         <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/#faq" />
-        
         {/* Open Graph Tags */}
         <meta property="og:title" content="CBSE Class 10 Math Tutoring FAQs | Ankuram Tuition" />
         <meta property="og:description" content="Common questions about CBSE Class 10 math tutoring in Hyderabad - fees, schedules, teacher qualifications, and more." />
@@ -145,7 +142,7 @@ const FAQSection: React.FC = () => {
             >
               Frequently Asked <span className="text-yellow-300">Questions</span> about CBSE Class 10 Math Tutoring
             </motion.h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto text-lg">
               Find answers to common questions from parents and students about our CBSE Class 10 math tutoring in Hyderabad.
             </p>
           </header>
@@ -154,23 +151,10 @@ const FAQSection: React.FC = () => {
           <div 
             className="grid md:grid-cols-2 gap-6 md:gap-10"
             role="list"
-            aria-label="Frequently asked questions"
+            aria-label="Frequently asked questions about CBSE Class 10 math tutoring"
           >
             {faqs.map((faq, index) => {
               const isExpanded = expandedIndex === index;
-              const cardVariants = {
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { 
-                    duration: 0.5, 
-                    delay: index * 0.1,
-                    ease: [0.4, 0, 0.2, 1] as const,
-                  },
-                },
-              };
-
               return (
                 <motion.article
                   key={index}
@@ -178,8 +162,10 @@ const FAQSection: React.FC = () => {
                   whileInView="visible"
                   variants={cardVariants}
                   viewport={{ once: true, margin: "-50px" }}
-                  className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition-shadow duration-300"
+                  className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl"
                   role="listitem"
+                  tabIndex={0}
+                  aria-labelledby={`faq-question-${index}`}
                 >
                   <h3 
                     className="text-lg md:text-xl font-bold text-gray-900 mb-3"
@@ -188,9 +174,7 @@ const FAQSection: React.FC = () => {
                     {faq.question}
                   </h3>
                   <div
-                    className={`text-gray-600 leading-relaxed transition-all duration-300 overflow-hidden ${
-                      isExpanded ? "" : "line-clamp-2"
-                    }`}
+                    className={`text-gray-600 leading-relaxed ${isExpanded ? '' : 'line-clamp-2'}`}
                     id={`faq-answer-${index}`}
                     aria-labelledby={`faq-question-${index}`}
                   >
@@ -198,11 +182,11 @@ const FAQSection: React.FC = () => {
                   </div>
                   <button
                     onClick={() => toggleExpand(index)}
-                    className="mt-4 text-yellow-400 font-semibold hover:underline focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2 rounded px-2 py-1 transition-colors duration-200"
+                    className="mt-4 text-yellow-400 font-semibold hover:underline focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2 rounded px-2 py-1"
                     type="button"
                     aria-expanded={isExpanded}
                     aria-controls={`faq-answer-${index}`}
-                    aria-label={`${isExpanded ? 'Show less' : 'Show more'} for ${faq.question}`}
+                    aria-label={`${isExpanded ? 'Collapse' : 'Expand'} answer for ${faq.question}`}
                   >
                     {isExpanded ? "Less" : "More"}
                   </button>
@@ -224,8 +208,8 @@ const FAQSection: React.FC = () => {
             </p>
             <a
               href="tel:+917396669430"
-              className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
-              aria-label="Call us at +91 7396669430 for more information"
+              className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
+              aria-label="Call Ankuram Tuition Centre at +91 7396669430 for more information about CBSE Class 10 math tutoring"
             >
               <span>Call Us for Answers</span>
               <svg 
