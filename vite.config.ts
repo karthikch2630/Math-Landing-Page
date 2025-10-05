@@ -1,10 +1,20 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
-});
+  plugins: [react(), visualizer({ open: true })],
+  build: {
+    target: 'esnext', // modern browsers
+    minify: 'esbuild', // faster minification
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'] // separate vendor bundle
+        }
+      }
+    }
+  }
+})
+

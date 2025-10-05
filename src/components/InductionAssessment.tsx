@@ -48,34 +48,20 @@ const InductionAssessment: React.FC = () => {
     },
   ];
 
-  // Optimize animation variants for performance
+  // Framer Motion variants
   const containerVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.7,
-        ease: [0.4, 0, 0.2, 1] as const, // easeOut cubic bezier
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as const } },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as const, // easeOut cubic bezier
-      },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const } },
   };
 
   return (
     <>
-      {/* Dynamic Meta Tags for SEO */}
+      {/* SEO Optimized Meta Tags */}
       <Helmet>
         <title>CBSE Class 10 Math Diagnostic Assessment | Hyderabad</title>
         <meta
@@ -87,16 +73,14 @@ const InductionAssessment: React.FC = () => {
           content="CBSE Class 10 math diagnostic test, math assessment Hyderabad, CBSE Grade 10 tutoring, math skills test, free assessment"
         />
         <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/assessment" />
-        
-        {/* Open Graph Tags */}
+
+        {/* Open Graph */}
         <meta property="og:title" content="CBSE Class 10 Math Diagnostic Assessment | Hyderabad" />
         <meta property="og:description" content="Free diagnostic assessment for CBSE Class 10 math students. Identify gaps and create personalized learning plans." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://cbseclass10.ankuramtuition.com/assessment" />
-      </Helmet>
 
-      {/* Structured Data for Assessment Service */}
-      <Helmet>
+        {/* Structured Data */}
         <script type="application/ld+json">{`
           {
             "@context": "https://schema.org",
@@ -154,20 +138,12 @@ const InductionAssessment: React.FC = () => {
               Induction <span className="text-yellow-400">Assessment</span>
             </h2>
             <p className="text-gray-700 max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
-              Identify and{" "}
-              <strong className="font-semibold text-indigo-600">
-                strengthen your child's math skills
-              </strong>{" "}
-              with our comprehensive diagnostic test designed specifically for CBSE Class 10 students.
+              Identify and <strong className="font-semibold text-indigo-600">strengthen your child's math skills</strong> with our comprehensive diagnostic test designed specifically for CBSE Class 10 students.
             </p>
           </header>
 
-          {/* 2-Column Grid */}
-          <div 
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8"
-            role="list"
-            aria-label="Assessment process illustrations"
-          >
+          {/* Grid of Images */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8" role="list" aria-label="Assessment process illustrations">
             {images.map((img, index) => (
               <motion.article
                 key={index}
@@ -176,10 +152,7 @@ const InductionAssessment: React.FC = () => {
                 whileInView="visible"
                 variants={cardVariants}
                 viewport={{ once: true, margin: "-50px" }}
-                whileHover={{ 
-                  scale: 1.03,
-                  transition: { duration: 0.3 }
-                }}
+                whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
                 className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 focus-within:ring-4 focus-within:ring-yellow-400 focus-within:ring-offset-2"
                 tabIndex={0}
                 aria-label={`Step ${index + 1} of assessment process`}
@@ -215,18 +188,18 @@ const InductionAssessment: React.FC = () => {
               aria-label="Call to book your free CBSE Class 10 math assessment"
             >
               <span>Book Free Assessment</span>
-              <svg 
-                className="w-5 h-5" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                 />
               </svg>
             </a>
@@ -236,17 +209,6 @@ const InductionAssessment: React.FC = () => {
           </motion.div>
         </motion.div>
       </section>
-
-      {/* Reduced motion support */}
-      <style>{`
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
     </>
   );
 };
