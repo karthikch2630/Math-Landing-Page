@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from "framer-motion";
 import { Helmet } from 'react-helmet-async';
 
 // Type definitions for testimonials
@@ -69,7 +69,39 @@ const scrollingTestimonials: ScrollingTestimonial[] = [
   },
 ];
 
-const TestimonialSection = () => {
+const TestimonialSection: React.FC = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const pauseButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Disable animation if prefers-reduced-motion is enabled
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setIsPaused(true);
+    }
+  }, [shouldReduceMotion]);
+
+  const togglePause = () => {
+    setIsPaused(prev => !prev);
+    // Focus the pause button after toggling for accessibility
+    if (pauseButtonRef.current) {
+      pauseButtonRef.current.focus();
+    }
+  };
+
+  // Handle video playback with keyboard
+  const handleVideoKeyDown = (e: React.KeyboardEvent<HTMLVideoElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const video = e.currentTarget;
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  };
+
   return (
     <>
       {/* SEO Meta Tags */}
@@ -84,7 +116,6 @@ const TestimonialSection = () => {
           content="CBSE Class 10 math tutoring reviews, math tutoring Hyderabad, CBSE Grade 10 testimonials, Ankuram Tuition Centre reviews, parents CBSE Class 10"
         />
         <link rel="canonical" href="https://cbseclass10.ankuramtuition.com/testimonials" />
-        {/* Open Graph Tags */}
         <meta property="og:title" content="CBSE Class 10 Math Tutoring Testimonials | Hyderabad" />
         <meta property="og:description" content="Hear from students and parents about the impact of our CBSE Class 10 math tutoring in Hyderabad." />
         <meta property="og:type" content="website" />
@@ -155,28 +186,30 @@ const TestimonialSection = () => {
             className="text-center mb-16"
           >
             <h1 id="testimonials-heading" className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-              Watch <span className="text-yellow-300">Our Students Shine</span> in CBSE Class 10 Math
+              Watch <span className="text-yellow-400">Our Students Shine</span> in CBSE Class 10 Math
             </h1>
-            <p className="text-gray-600 mt-4 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-700 mt-4 text-lg max-w-2xl mx-auto">
               See the progress and confidence our students gain with our expert CBSE Class 10 math tutoring in Hyderabad.
             </p>
           </motion.div>
 
           {/* Featured Video - First Testimonial Large */}
-          <motion.div
+          <motion.article
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="mb-16"
+            role="article"
+            aria-labelledby={`testimonial-${testimonials[0].id}-heading`}
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white p-6 md:p-8" tabIndex={0}>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="order-2 md:order-1 space-y-4">
-                  <div className="inline-block px-4 py-2 bg-yellow-300 rounded-full">
+                  <div className="inline-block px-4 py-2 bg-yellow-400 rounded-full">
                     <span className="text-sm font-bold text-gray-900">Featured Story</span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900">{testimonials[0].name}</h3>
+                  <h3 id={`testimonial-${testimonials[0].id}-heading`} className="text-3xl md:text-4xl font-bold text-gray-900">{testimonials[0].name}</h3>
                   <p className="text-base text-gray-500 font-medium">{testimonials[0].role}</p>
                   <p className="text-xl text-gray-700 leading-relaxed">{testimonials[0].text}</p>
                 </div>
@@ -187,24 +220,29 @@ const TestimonialSection = () => {
                     playsInline
                     muted
                     preload="metadata"
-                    className="w-full h-64 md:h-96 object-cover"
+                    tabIndex={0}
+                    className="w-full h-64 md:h-96 object-cover focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
                     aria-label={`Testimonial video by ${testimonials[0].name} about their experience with CBSE Class 10 math tutoring at Ankuram Tuition Centre`}
+                    aria-keyshortcuts="Enter Space"
+                    onKeyDown={handleVideoKeyDown}
                   />
                 </div>
               </div>
             </div>
-          </motion.div>
+          </motion.article>
 
           {/* Two Column Grid for Remaining Videos */}
-          <div className="grid md:grid-cols-2 gap-8 mb-20">
+          <div className="grid md:grid-cols-2 gap-8 mb-20" role="list" aria-label="Student video testimonials for CBSE Class 10 math tutoring">
             {testimonials.slice(1).map((t, idx) => (
-              <motion.div
+              <motion.article
                 key={t.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.2 }}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl"
+                role="listitem"
+                aria-labelledby={`testimonial-${t.id}-heading`}
                 tabIndex={0}
               >
                 <div className="rounded-xl overflow-hidden">
@@ -214,16 +252,19 @@ const TestimonialSection = () => {
                     playsInline
                     muted
                     preload="metadata"
-                    className="w-full h-64 object-cover"
+                    tabIndex={0}
+                    className="w-full h-64 object-cover focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
                     aria-label={`Testimonial video by ${t.name} about their experience with CBSE Class 10 math tutoring at Ankuram Tuition Centre`}
+                    aria-keyshortcuts="Enter Space"
+                    onKeyDown={handleVideoKeyDown}
                   />
                 </div>
                 <div className="p-6 space-y-3">
-                  <h3 className="text-2xl font-bold text-gray-900">{t.name}</h3>
+                  <h3 id={`testimonial-${t.id}-heading`} className="text-2xl font-bold text-gray-900">{t.name}</h3>
                   <p className="text-sm text-gray-500 font-medium">{t.role}</p>
                   <p className="text-base text-gray-700 leading-relaxed">{t.text}</p>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
 
@@ -237,23 +278,37 @@ const TestimonialSection = () => {
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
-                Real Stories from <span className="text-yellow-300">Real Parents</span>
+                Real Stories from <span className="text-yellow-400">Real Parents</span>
               </h2>
-              <p className="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">
+              <p className="text-gray-700 mt-3 text-lg max-w-2xl mx-auto">
                 Genuine feedback from parents about our CBSE Class 10 math tutoring in Hyderabad.
               </p>
             </motion.div>
 
-            <div className="relative">
-              {/* Gradient Overlays */}
-              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
+            <div className="text-center mb-4">
+              <button
+                ref={pauseButtonRef}
+                onClick={togglePause}
+                className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-offset-2"
+                aria-label={isPaused ? 'Resume scrolling parent testimonials' : 'Pause scrolling parent testimonials'}
+                aria-controls="scrolling-testimonials"
+              >
+                {isPaused ? 'Resume' : 'Pause'}
+              </button>
+              <div role="status" aria-live="polite" className="sr-only">
+                {isPaused ? 'Scrolling parent testimonials paused' : 'Scrolling parent testimonials resumed'}
+              </div>
+            </div>
+
+            <div className="relative" id="scrolling-testimonials">
+              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10" aria-hidden="true"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10" aria-hidden="true"></div>
               
               <motion.div
                 className="flex gap-6 py-4"
-                animate={{ x: ["0%", "-50%"] }}
+                animate={isPaused || shouldReduceMotion ? {} : { x: ["0%", "-50%"] }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: isPaused || shouldReduceMotion ? 0 : Infinity,
                   duration: 30,
                   ease: "linear",
                 }}
@@ -261,20 +316,21 @@ const TestimonialSection = () => {
                 {[...scrollingTestimonials, ...scrollingTestimonials].map((st, i) => (
                   <div
                     key={`${st.id}-${i}`}
-                    className="min-w-[340px] bg-white border border-gray-200 rounded-2xl shadow-md p-8 flex flex-col justify-between hover:shadow-xl hover:border-yellow-300"
+                    className="min-w-[340px] bg-white border border-gray-200 rounded-2xl shadow-md p-8 flex flex-col justify-between hover:shadow-xl hover:border-yellow-400"
                     role="listitem"
+                    aria-labelledby={`scrolling-testimonial-${st.id}-${i}-heading`}
                   >
                     <div className="mb-4">
-                      <svg className="w-10 h-10 text-yellow-300 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <svg className="w-10 h-10 text-yellow-400 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
                       </svg>
                     </div>
                     <p className="text-gray-700 leading-relaxed mb-6">{st.text}</p>
                     <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                      <div className="w-10 h-10 bg-yellow-300 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
                         <span className="text-gray-900 font-bold text-lg" aria-hidden="true">{st.name.charAt(0)}</span>
                       </div>
-                      <span className="font-semibold text-gray-900">{st.name}</span>
+                      <span id={`scrolling-testimonial-${st.id}-${i}-heading`} className="font-semibold text-gray-900">{st.name}</span>
                     </div>
                   </div>
                 ))}
@@ -292,6 +348,17 @@ const TestimonialSection = () => {
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
           }
+        }
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border-width: 0;
         }
       `}</style>
     </>
